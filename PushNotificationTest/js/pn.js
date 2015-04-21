@@ -114,7 +114,7 @@ function subscribe() {
 					pushButton.textContent = 'Enable Push Messages';	
 				}
 			});
-	}
+	});
 }
 
 function unsubscribe() {}
