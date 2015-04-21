@@ -23,7 +23,7 @@ window.addEventListener('load', function() {
 });
 
 // service workerが登録されたときの初期化処理
-function initialState() {
+function initialiseState() {
 
 	// Notificationをサポートしているか確認
 	// してないなら通知許可ボタンはdisabledのままに
