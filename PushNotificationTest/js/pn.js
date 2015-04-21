@@ -14,9 +14,8 @@ window.addEventListener('load', function() {
 
 	// service workerのサポートを確認
 	if('serviceWorker' in navigator) {
-		navigator.serviceWorker.register('./js/service-worker.js').then(initialiseState).catch(function(err){
-		console.log('ServiceWorker registration failed: ', err);
-	});
+		navigator.serviceWorker.register('./js/service-worker.js')
+		.then(initialiseState);
 	}else {
 		console.log('Service workers aren\'t supported in this browser.');
 	}
