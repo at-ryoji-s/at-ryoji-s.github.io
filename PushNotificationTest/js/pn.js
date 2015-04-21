@@ -50,6 +50,8 @@ function initialiseState() {
 	// 通知許可の署名を得るためにservice workerの登録を確認
 	navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
 
+		console.log("swervice worker is ready.");
+
 		// 通知許可の署名をすでに持っているかどうか確認
 		serviceWorkerRegistration.pushManager.getSubscription()
 			.then(function(subscription){
