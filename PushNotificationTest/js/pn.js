@@ -1,10 +1,10 @@
 var isPushEnabled = false;
 
 
-window.addEventListner('load', function() {
+window.addEventListener('load', function() {
 	var pushButton = document.querySelector('.js-push-button');
 
-	pushButton.addEventListner('click', function(){
+	pushButton.addEventListener('click', function(){
 		if(isPushEnabled) {
 			unsubscribe();
 		} else {
