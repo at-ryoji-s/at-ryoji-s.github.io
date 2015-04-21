@@ -1,28 +1,52 @@
 var isPushEnabled = false;
 
+// In sendSubscriptionToServer() you will need to consider how you handle failed network requests when updating the subscriptionId. 
+// One solution is to track the state of the subscriptionId and endpoint in a cookie to determine whether your server needs the latest details or not.
+// subscriptionIdが更新が失敗するときのことを考慮しておく必要がある。
+// 解決方法としては、subscripctionIdの状態やendpointをトラックする。
+// subscriptionIdやendpointはサーバが最新の詳細情報が必要かどうかを判断するためにクッキーに書いておく。
+function sendSubscriptionToServer(_subscription) {
+	// TODO: Send the subscription.subscriptionId and 
+	// subscription.endpoint to your server and save 
+	// it to send a push message at a later date
+	console.log('TODO: Implement sendSubscriptionToServer()');
+}
 
-window.addEventListener('load', function() {
+function unsubscribe() {}
+
+function subscribe() {
+	
+	// 処理中に連打されないように押せなくしておく
 	var pushButton = document.querySelector('.js-push-button');
+	pushButton.disabled = true;
 
-	pushButton.addEventListener('click', function(){
-		if(isPushEnabled) {
-			unsubscribe();
-		} else {
-			subscribe();
-		}
+	navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+		// 新しい署名を作る
+		serviceWorkerRegistration.pushManager.subscribe()
+			.then(function(subscription) {
+				// 成功
+				isPushEnabled = true;
+				pushButton.textContent = 'Disable Push Messages';
+				pushButton.disabled = false;
+
+				return sendSubscriptionToServer(subscription);
+			})
+			.catch(function(e) {
+				if (Notification.permission === 'denied') {
+					// 署名が失敗したのは通知が許可されなかったから
+					console.warn('Permission for Notifications was denied');
+					pushButton.disabled = true;
+				}else {
+					// 失敗。manifestがまちがっているかも。
+					console.error('Unable to subscribe to push.', e);
+					pushButton.disabled = false;
+					pushButton.textContent = 'Enable Push Messages';	
+				}
+			});
 	});
+}
 
-	// service workerのサポートを確認
-	if('serviceWorker' in navigator) {
-		navigator.serviceWorker.register('./js/service-worker.js').then(initialiseState).catch(function(err){
-		console.log('ServiceWorker registration failed: ', err);
-	});
-	}else {
-		console.log('Service workers aren\'t supported in this browser.');
-	}
-});
-
-// service workerが登録されたときの初期化処理
+// service workerの初期化処理
 function initialiseState() {
 
 	// Notificationをサポートしているか確認
@@ -80,43 +104,27 @@ function initialiseState() {
 	});
 }
 
-//In sendSubscriptionToServer() you will need to consider how you handle failed network requests when updating the subscriptionId. One solution is to track the state of the subscriptionId and endpoint in a cookie to determine whether your server needs the latest details or not.
-// subscription idが更新するとうまくいかないから、処理する必要があるとかなんとか
-function sendSubscriptionToServer(_subscription) {
-	console.log('TODO: Implement sendSubscriptionToServer()');
-}
-
-
-function subscribe() {
-	
-	// 処理中に連打されないように押せなくしておく
+window.addEventListener('load', function() {
 	var pushButton = document.querySelector('.js-push-button');
-	pushButton.disabled = true;
 
-	navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-		// 新しい署名を作る
-		serviceWorkerRegistration.pushManager.subscribe()
-			.then(function(subscription) {
-				// 成功
-				isPushEnabled = true;
-				pushButton.textContent = 'Disable Push Messages';
-				pushButton.disabled = false;
-
-				return sendSubscriptionToServer(subscription);
-			})
-			.catch(function(e) {
-				if (Notification.permission === 'denied') {
-					// 署名が失敗したのは通知が許可されなかったから
-					console.warn('Permission for Notifications was denied');
-					pushButton.disabled = true;
-				}else {
-					// 失敗。manifestがまちがっているかも。
-					console.error('Unable to subscribe to push.', e);
-					pushButton.disabled = false;
-					pushButton.textContent = 'Enable Push Messages';	
-				}
-			});
+	pushButton.addEventListener('click', function(){
+		if(isPushEnabled) {
+			unsubscribe();
+		} else {
+			subscribe();
+		}
 	});
-}
 
-function unsubscribe() {}
+	// service workerのサポートを確認
+	if('serviceWorker' in navigator) {
+		navigator.serviceWorker.register('./js/service-worker.js').then(initialiseState).catch(function(err){
+		console.log('ServiceWorker registration failed: ', err);
+	});
+	}else {
+		console.log('Service workers aren\'t supported in this browser.');
+	}
+});
+
+
+
+
