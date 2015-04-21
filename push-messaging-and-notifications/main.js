@@ -1,6 +1,6 @@
 'use strict';
 
-var API_KEY = '<YOUR API KEY>';
+var API_KEY = 'AIzaSyAkov8goJf63YBbCD6nwkB4FKAw1gAxVuI';
 
 var curlCommandDiv = document.querySelector('.js-curl-command');
 var isPushEnabled = false;
@@ -30,7 +30,6 @@ function unsubscribe() {
 
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
 
-		console.log("service worker is ready.");
 
     // To unsubscribe from push messaging, you need get the
     // subcription object, which you can call unsubscribe() on.
@@ -137,6 +136,7 @@ function initialiseState() {
 
   // We need the service worker registration to check for a subscription
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+		console.log("service worker is ready.");
     // Do we already have a push message subscription?
     serviceWorkerRegistration.pushManager.getSubscription()
       .then(function(subscription) {
