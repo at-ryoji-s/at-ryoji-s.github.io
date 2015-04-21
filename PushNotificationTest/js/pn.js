@@ -81,7 +81,7 @@ function initialiseState() {
 //In sendSubscriptionToServer() you will need to consider how you handle failed network requests when updating the subscriptionId. One solution is to track the state of the subscriptionId and endpoint in a cookie to determine whether your server needs the latest details or not.
 // subscription idが更新するとうまくいかないから、処理する必要があるとかなんとか
 function sendSubscriptionToServer(_subscription) {
-
+	console.log('TODO: Implement sendSubscriptionToServer()');
 }
 
 
