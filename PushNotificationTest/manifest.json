@@ -6,7 +6,7 @@
         "sizes": "192x192",
         "type": "image/png" 
       }],  
-  "start_url": "/PushNotificationTest/index.html?homescreen=1",  
+  "start_url": "https://at-ryoji-s.github.io/PushNotificationTest/index.html?homescreen=1",  
   "display": "standalone",  
   "gcm_sender_id": "978401376811",  
   "gcm_user_visible_only": true  
