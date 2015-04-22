@@ -12,6 +12,18 @@ function sendSubscriptionToServer(_subscription) {
 	console.log('TODO: Implement sendSubscriptionToServer()');
 }
 
+function showCurlCommand(subscription) {
+  // The curl command to trigger a push message straight from GCM
+  var subscriptionId = subscription.subscriptionId;
+  var endpoint = subscription.endpoint;
+  var curlCommand = 'curl --header "Authorization: key=' + API_KEY +
+    '" --header Content-Type:"application/json" ' + endpoint + 
+    ' -d "{\\"registration_ids\\":[\\"' + subscriptionId + '\\"]}"';
+
+	console.log(curlCommand);
+}
+
+
 function unsubscribe() {
 
 	// 処理中に連打されないように押せなくしておく
@@ -65,6 +77,8 @@ function subscribe() {
 				isPushEnabled = true;
 				pushButton.textContent = 'Disable Push Messages';
 				pushButton.disabled = false;
+
+				showCurlCommand(subscription) 
 
 				return sendSubscriptionToServer(subscription);
 			})
@@ -129,6 +143,9 @@ function initialiseState() {
 
 				// 署名済みならcookieなどに保存しておくのがいいらしい
 				sendSubscriptionToServer(subscription);
+
+				// curlコマンドを表示
+				showCurlCommand(subscription) 
 
 				// 非許可にできるようにボタンの文言を変更
 				pushButton.textContent = 'Disable Push Messages';
