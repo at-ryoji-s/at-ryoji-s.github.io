@@ -1,4 +1,5 @@
 var isPushEnabled = false;
+var API_KEY = "AIzaSyAkov8goJf63YBbCD6nwkB4FKAw1gAxVuI";
 
 // In sendSubscriptionToServer() you will need to consider how you handle failed network requests when updating the subscriptionId. 
 // One solution is to track the state of the subscriptionId and endpoint in a cookie to determine whether your server needs the latest details or not.
