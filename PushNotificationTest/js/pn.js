@@ -12,7 +12,44 @@ function sendSubscriptionToServer(_subscription) {
 	console.log('TODO: Implement sendSubscriptionToServer()');
 }
 
-function unsubscribe() {}
+function unsubscribe() {
+
+	// 処理中に連打されないように押せなくしておく
+	var pushButton = document.querySelector('.js-push-button');
+	pushButton.disabled = true;
+
+	navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+
+		// subscriptionオブジェクトを取得
+		serviceWorkerRegistration.pushManager.getSubscription().then(function(pushSubscription) {
+
+			// subscriptionオブジェクトがないなら、ボタンを見た目を変えて、処理を終了。 
+			if(!pushSubscription) {
+				isPushEnabled = false;
+				pushButton.textContent = 'Eable Push Messages';
+				pushButton.disabled = false;
+				return;
+			}
+
+			var subscriptionId = pushSubscription.subscriptionId;
+			console.log('TODO: Implement remobeSubscriptionFromServer()');
+
+			// 認証解除
+			pushSubscription.unsubscribe().then(function(successful) {
+          pushButton.disabled = false;
+          pushButton.textContent = 'Enable Push Messages';
+          isPushEnabled = false;
+			}).catch(function(e); {
+					// 認証解除に失敗	
+					console.log('Unsubscription error: ', e);
+          pushButton.disabled = false;
+          pushButton.textContent = 'Enable Push Messages';
+			});
+		}).catch(function(e) {
+			console.error('Error thrown while unsubscribing from push messaging.', e);
+		});
+	});
+}	
 
 function subscribe() {
 	
