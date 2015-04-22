@@ -40,7 +40,7 @@ function unsubscribe() {
 			// subscriptionオブジェクトがないなら、ボタンを見た目を変えて、処理を終了。 
 			if(!pushSubscription) {
 				isPushEnabled = false;
-				pushButton.textContent = 'Eable Push Messages';
+				pushButton.textContent = '通知を許可する。';
 				pushButton.disabled = false;
 				return;
 			}
@@ -51,13 +51,13 @@ function unsubscribe() {
 			// 認証解除
 			pushSubscription.unsubscribe().then(function(successful) {
           pushButton.disabled = false;
-          pushButton.textContent = 'Enable Push Messages';
+					pushButton.textContent = '通知を許可する。';
           isPushEnabled = false;
 			}).catch(function(e) {
 					// 認証解除に失敗	
 					console.log('Unsubscription error: ', e);
           pushButton.disabled = false;
-          pushButton.textContent = 'Enable Push Messages';
+					pushButton.textContent = '通知を許可する。';
 			});
 		}).catch(function(e) {
 			console.error('Error thrown while unsubscribing from push messaging.', e);
@@ -77,7 +77,7 @@ function subscribe() {
 			.then(function(subscription) {
 				// 成功
 				isPushEnabled = true;
-				pushButton.textContent = 'Disable Push Messages';
+				pushButton.textContent = '通知をやめる。';
 				pushButton.disabled = false;
 
 				showCurlCommand(subscription) 
@@ -93,7 +93,7 @@ function subscribe() {
 					// 失敗。manifestがまちがっているかも。
 					console.error('Unable to subscribe to push.', e);
 					pushButton.disabled = false;
-					pushButton.textContent = 'Enable Push Messages';	
+					pushButton.textContent = '通知を許可する。';
 				}
 			});
 	});
@@ -150,7 +150,7 @@ function initialiseState() {
 				showCurlCommand(subscription) 
 
 				// 非許可にできるようにボタンの文言を変更
-				pushButton.textContent = 'Disable Push Messages';
+				pushButton.textContent = '通知をやめる。';
 				isPushEnabled = true;
 
 			})
