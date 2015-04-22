@@ -39,7 +39,7 @@ function unsubscribe() {
           pushButton.disabled = false;
           pushButton.textContent = 'Enable Push Messages';
           isPushEnabled = false;
-			}).catch(function(e); {
+			}).catch(function(e) {
 					// 認証解除に失敗	
 					console.log('Unsubscription error: ', e);
           pushButton.disabled = false;
